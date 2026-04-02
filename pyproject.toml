@@ -1,0 +1,12 @@
+[build-system]
+requires = ["setuptools>=64", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "sim_qec"
+version = "0.1.0"
+description = "Syndrome-based learning of logical error channels for quantum error-correcting codes."
+requires-python = ">=3.9"
+
+[tool.setuptools.packages.find]
+include = ["sim_qec*"]

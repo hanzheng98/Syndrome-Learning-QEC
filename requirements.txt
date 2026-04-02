@@ -1,0 +1,11 @@
+numpy
+scipy
+stim
+galois
+networkx
+ldpc
+bposd
+numba
+pymatching
+matplotlib
+beliefmatching
