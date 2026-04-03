@@ -21,7 +21,7 @@ import copy
 from dataclasses import dataclass, field
 from bposd.css import css_code
 from typing import Dict, List, Optional, Union, Tuple
-from sim_qec.circuit_scheduling import ColorationCircuit
+from sim_qec.detector_error_models.circuit_scheduling import ColorationCircuit
 
 
 # ---------------------------------------------------------------------------

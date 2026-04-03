@@ -11,9 +11,9 @@ import time
 from bposd.css import css_code
 from beliefmatching import detector_error_model_to_check_matrices
 from sim_qec.codes_family.hpc_lp import rotated_surface_code_checks
-from sim_qec.dem_sim import DEMSyndromeExtraction
-from sim_qec.circuit_lep_prediction import PredictPriors
-from sim_qec.circuit_decoders import BPLSD_Decoder
+from sim_qec.detector_error_models.dem_sim import DEMSyndromeExtraction
+from sim_qec.detector_error_models.circuit_lep_prediction import PredictPriors
+from sim_qec.detector_error_models.circuit_decoders import BPLSD_Decoder
 
 
 '''

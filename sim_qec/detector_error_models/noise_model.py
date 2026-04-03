@@ -9,9 +9,6 @@ import itertools
 from scipy import sparse
 import random 
 from typing import Any, Callable, Dict, List, Optional, Type, Union, Tuple
-from sim_qec.codes_family.classical_codes import cyclic_square_matrix
-from sim_qec.codes_family.hpc_lp import HGP
-from sim_qec.legacy.decoders import MLEDecoder # for future impelmentation, add Decoder base class from which to inhert 
 
 
 PauliType = Tuple[str, str]
