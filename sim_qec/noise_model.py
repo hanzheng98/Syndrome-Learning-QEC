@@ -1,3 +1,4 @@
+import re
 import stim
 import copy
 import galois
@@ -68,7 +69,8 @@ def append_character_product(circuit: stim.Circuit,
 
 
 ## CX gate errors
-def AddCXError(circuit:stim.Circuit, error_instruction:str) -> stim.Circuit:
+def AddCXError(circuit:stim.Circuit, 
+               error_instruction:str) -> stim.Circuit:
     circuit_str = str(circuit)
     
     ## Find all the unique cx instructions

@@ -154,7 +154,7 @@ CIRCUIT_ERROR_PARAMS = {
     "p_i": 1.0,          # idling single-qubit error
     "p_state_p": 0.8,    # state prep error
     "p_m": 0.9,          # measurement error
-    "p_CX": 0.0,         # 2-qubit depolarizing error (not used in 'repetition' mode below)
+    "p_CX": 1.0,         # 2-qubit depolarizing error (not used in 'repetition' mode below)
     "p_idling_gate": 0.0 # idling during gates
 }
 
