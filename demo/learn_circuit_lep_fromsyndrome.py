@@ -10,8 +10,9 @@ Written by Han Zheng
 """
 
 import numpy as np
+from bposd.css import css_code
+from sim_qec.codes_family.hpc_lp import rotated_surface_code_checks
 from sim_qec.pipeline import (
-    CSSCode,
     SyndromeExtractionConfig,
     run_syndrome_extraction,
     benchmark_lep,
@@ -24,10 +25,10 @@ def main():
     # Step 1: Build code
     # ==================================================================
     d = 3
-    code = CSSCode.from_rotated_surface_code(d)
-    print(f"Code: [[{code.n}, {code.k}, {code.distance}]]")
-    print(f"Hx shape: {code.Hx.shape}, Hz shape: {code.Hz.shape}")
-    print(f"CSS condition Hx @ Hz^T = 0: {np.all((code.Hx @ code.Hz.T) % 2 == 0)}")
+    Hx, Hz = rotated_surface_code_checks(d)
+    code = css_code(Hx, Hz)
+    print(f"Code: [[{code.N}, {code.K}, d={d}]]")
+    print(f"Hx shape: {code.hx.shape}, Hz shape: {code.hz.shape}")
 
     # ==================================================================
     # Step 2: Build circuit, sample, extract DEM
