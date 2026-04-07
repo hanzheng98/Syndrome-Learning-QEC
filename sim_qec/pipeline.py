@@ -16,6 +16,8 @@ Example usage::
     result = run_syndrome_extraction(code)
     bench = benchmark_lep(result, max_order=4)
     print(f"Sampled LEP: {bench.lep_sampled}, Predicted LEP: {bench.lep_predicted}")
+    
+    See Algorithm 1 in the paper https://arxiv.org/abs/2601.22286 for more details on the pipeline and its stages.
 """
 
 from __future__ import annotations
@@ -38,7 +40,7 @@ from sim_qec.detector_error_models.circuit_decoders import BPLSD_Decoder
 
 
 # ---------------------------------------------------------------------------
-# Stage 1: Syndrome extraction
+# Stage 1: Syndrome extraction (Round 1 of Algorithm 1)
 # ---------------------------------------------------------------------------
 
 @dataclass
@@ -166,7 +168,7 @@ def run_syndrome_extraction(
 
 
 # ---------------------------------------------------------------------------
-# Stage 3: Benchmark
+# Stage 2: Benchmark (Round 2 of Algorithm 1)
 # ---------------------------------------------------------------------------
 
 DEFAULT_BPLSD_PARAMS = {
@@ -246,6 +248,8 @@ def benchmark_lep(
         A_syndrome, sample_stab_eigs, mode=predict_mode,
     )
 
+
+    # Learning the logical error probability (LEP) with the predicted priors, and comparing to the sampled LEP. (Round 3 of Algorithm 1)
     # --- Set up decoder with true priors ---
     decoder = BPLSD_Decoder(BPLSD_params=decoder_params)
     decoder.set_decoder({'H': h, 'L': l, 'channel_probs': true_priors})
@@ -266,6 +270,8 @@ def benchmark_lep(
         max_order=max_order,
     )
     lep_predicted_runtime = time.perf_counter() - t0
+
+
 
     # --- True LEP (ground truth from large sample) ---
     num_samples_true_lep = result.config.num_samples_true_lep
