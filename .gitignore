@@ -1,5 +1,6 @@
 # Data
 data/
+*.jsonl
 
 # Python
 __pycache__/
@@ -8,6 +9,24 @@ __pycache__/
 dist/
 build/
 *.egg
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.tox/
+.nox/
+.coverage
+.coverage.*
+htmlcov/
+.hypothesis/
+
+# Packaging / wheels
+pip-wheel-metadata/
+
+# Type checker / language server
+.pyright/
+
+# Python version managers
+.python-version
 
 # Jupyter
 .ipynb_checkpoints/
@@ -16,10 +35,18 @@ build/
 .DS_Store
 Thumbs.db
 
+# Logs
+*.log
+
 # IDE
 .vscode/
+.vscode/settings.json
+.idea/
+*.code-workspace
 
 # Environment
 .env
 .venv/
 venv/
+env/
+ENV/
