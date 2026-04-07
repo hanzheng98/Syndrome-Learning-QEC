@@ -13,16 +13,18 @@ Reference:
 ```bash
 conda create -n qec python=3.10 -y
 conda activate qec
+cd Syndrome-Learning-QEC
 pip install -r requirements.txt
-pip install -e .
+pip install -e .   # install sim_qec in editable mode
 ```
 
 **Option B: pip (venv)**
 
 ```bash
+cd Syndrome-Learning-QEC
 python3 -m venv .venv && source .venv/bin/activate
 pip install -r requirements.txt
-pip install -e .
+pip install -e .   # install sim_qec in editable mode
 ```
 
 **Optional** (required only for the MLE and ReplayBP decoders):
