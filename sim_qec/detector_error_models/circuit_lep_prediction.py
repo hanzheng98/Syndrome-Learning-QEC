@@ -124,6 +124,7 @@ class PredictPriors:
                 dectector_samples: Union[np.ndarray, sparse.csr_matrix],
                 check_matrix: Union[np.ndarray, sparse.csr_matrix],
                 subsample:bool=True,
+                subsample_factor: int=2,
                 ):
         '''
 
@@ -131,10 +132,14 @@ class PredictPriors:
 
         check_matrix: shape (num_detectors, num_faults) #this the fualts given from the priors
 
+        subsample_factor: number of stabilizer products per fault (rows of A = subsample_factor * num_faults).
+                          Higher values give better-conditioned least squares but cost more per call.
+
         '''
         self.detector_samples = dectector_samples
         self.check_matrix = check_matrix
-        self.subsample = subsample 
+        self.subsample = subsample
+        self.subsample_factor = subsample_factor
 
     
     def _build_A_matrix_syndromes(self,
@@ -152,7 +157,8 @@ class PredictPriors:
         if self.subsample:
             # sample_stabs = random.sample(stab_sets, k=2 * check_matrix.shape[1])
             # sample_stabs = [format(i, f'0{check_matrix.shape[0]}b') for i in random.sample(range(1, 1 << check_matrix.shape[0]), 2 * check_matrix.shape[1])]
-            sample_stabs = list({format(random.randrange(1, 1 << check_matrix.shape[0]), f'0{check_matrix.shape[0]}b') for _ in range(10 * check_matrix.shape[1])})[: 2 * check_matrix.shape[1]]
+            n_target = self.subsample_factor * check_matrix.shape[1]
+            sample_stabs = list({format(random.randrange(1, 1 << check_matrix.shape[0]), f'0{check_matrix.shape[0]}b') for _ in range(5 * n_target)})[:n_target]
         else: 
             stab_sets = [''.join(b) for b in itertools.product('01', repeat=check_matrix.shape[0]) if '1' in b]
             sample_stabs = stab_sets
@@ -178,7 +184,7 @@ class PredictPriors:
             sample_stabs: the randomly subsampled stabilizers as strings from their generators
         '''
         detector_samples = self.detector_samples
-        print(f'the detector shape is: {detector_samples.shape}')
+        # print(f'the detector shape is: {detector_samples.shape}')
         syndrome_eig_vals = np.zeros((len(sample_stabs),))
         for i, stab in enumerate(sample_stabs):
             indices = [j for j, bit in enumerate(stab) if bit == '1']

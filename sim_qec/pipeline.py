@@ -208,6 +208,7 @@ def benchmark_lep(
     decoder_params: Optional[dict] = None,
     predict_mode: str = 'rip',
     max_order: int = 4,
+    subsample_factor: int = 2,
 ) -> BenchmarkResult:
     """Compare sampled LEP vs predicted-prior LEP.
 
@@ -216,6 +217,9 @@ def benchmark_lep(
         decoder_params:         BPLSD decoder parameters (defaults to DEFAULT_BPLSD_PARAMS).
         predict_mode:           Prior prediction mode ('rip' or 'direct').
         max_order:              Maximum fault weight for predicted LEP enumeration.
+        subsample_factor:       Number of stabilizer products per fault for prior learning.
+                                Higher values give smoother predicted LEP at the cost of
+                                more computation per call. Default 2.
 
     Returns:
         BenchmarkResult with both LEP values and diagnostics.
@@ -234,6 +238,7 @@ def benchmark_lep(
         dectector_samples=dem_vals,
         check_matrix=h,
         subsample=True,
+        subsample_factor=subsample_factor,
     )
     A_syndrome, sample_stabs = predictor._build_A_matrix_syndromes()
     sample_stab_eigs = predictor._get_syndrome_expectations(sample_stabs=sample_stabs)
