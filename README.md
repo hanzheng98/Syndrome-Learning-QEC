@@ -8,12 +8,25 @@ Based on the algorithm described in:
 
 ## Setup
 
-Create a conda environment and install dependencies:
+Create a Python 3.10 environment (choose one method), then install dependencies.
+
+### Option A: conda
 
 ```bash
 conda create -n qec python=3.10 -y
 conda activate qec
+```
 
+### Option B: built-in venv
+
+```bash
+python3.10 -m venv .venv
+source .venv/bin/activate
+```
+
+Install dependencies (same for either environment):
+
+```bash
 pip install numpy scipy matplotlib numba networkx galois
 pip install stim ldpc bposd beliefmatching pymatching
 
@@ -80,7 +93,10 @@ Syndrome-Learning-QEC/
 ## Running the Demo
 
 ```bash
-conda activate qec
+# Activate your environment first:
+# conda activate qec
+# or
+# source .venv/bin/activate
 
 # Jupyter notebook
 jupyter notebook demo/qec_learn_syndrome.ipynb
