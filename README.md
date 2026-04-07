@@ -32,26 +32,27 @@ Files marked with `*` are used by the demo notebook.
 Syndrome-Learning-QEC/
 │
 ├── demo/
-│   ├── qec_learn_syndrome.ipynb *        # Jupyter notebook demo
-│   └── learn_circuit_lep_fromsyndrome.py # Script version of the demo
+│   ├── qec_learn_syndrome.ipynb *         # Jupyter notebook demo (with benchmark plots)
+│   ├── learn_circuit_lep_fromsyndrome.py  # Script version of the demo
+│   └── scaling_records_qec.json           # Cached scaling sweep results
 │
 ├── sim_qec/
-│   ├── __init__.py                       # bposd sparse-matrix patch
-│   ├── pipeline.py *                     # Pipeline API (CSSCode, run_syndrome_extraction, benchmark_lep)
+│   ├── __init__.py                        # bposd sparse-matrix patch
+│   ├── pipeline.py *                      # Pipeline API (run_syndrome_extraction, benchmark_lep)
 │   │
 │   ├── codes_family/
-│   │   ├── hpc_lp.py *                   # Rotated surface code, HGP, Lifted Product codes
-│   │   ├── classical_codes.py *          # Classical LDPC code generators
-│   │   └── est_distance.py              # Code distance estimation
+│   │   ├── hpc_lp.py *                    # Rotated surface code, HGP, Lifted Product codes
+│   │   ├── classical_codes.py *           # Classical LDPC code generators
+│   │   └── est_distance.py               # Code distance estimation
 │   │
 │   ├── detector_error_models/
-│   │   ├── dem_sim.py *                  # Stim circuit builder (DEMSyndromeExtraction, CircuitErrorParams)
-│   │   ├── circuit_scheduling.py *       # CX gate scheduling via graph coloring
-│   │   ├── circuit_lep_prediction.py *   # Learn fault priors from syndrome expectations (PredictPriors)
-│   │   ├── circuit_decoders.py *         # Decoder implementations (BPLSD, BPOSD, MLE, ReplayBP)
-│   │   └── noise_model.py               # Noise injection helpers (depolarizing, measurement, idling)
+│   │   ├── dem_sim.py *                   # Stim circuit builder (DEMSyndromeExtraction, CircuitErrorParams)
+│   │   ├── circuit_scheduling.py *        # CX gate scheduling via graph coloring
+│   │   ├── circuit_lep_prediction.py *    # Learn fault priors from syndrome expectations (PredictPriors)
+│   │   ├── circuit_decoders.py *          # Decoder implementations (BPLSD, BPOSD, MLE, ReplayBP)
+│   │   └── noise_model.py                # Noise injection helpers (depolarizing, measurement, idling)
 │   │
-│   └── legacy/                           # Archived modules (not used by the demo pipeline)
+│   └── legacy/                            # Archived modules (not used by the demo pipeline)
 │       ├── analytic_log_channel.py
 │       ├── circuit_sim.py
 │       ├── decoders.py
@@ -65,30 +66,16 @@ Syndrome-Learning-QEC/
 └── LICENSE
 ```
 
-## Notebook Call Graph
+## Notebook Structure
 
-The notebook uses a 3-stage pipeline. Here is the dependency flow:
-
-```
-demo/qec_learn_syndrome.ipynb
-  │
-  └─ sim_qec/pipeline.py
-       │
-       │  Stage 1: Build code
-       ├─ codes_family/hpc_lp.py ── rotated_surface_code_checks(d)
-       │    └─ bposd.css.css_code(Hx, Hz)
-       │
-       │  Stage 2: Circuit + sampling
-       ├─ run_syndrome_extraction(code, config) → SyndromeExtractionResult
-       │    ├─ detector_error_models/dem_sim.py ── DEMSyndromeExtraction
-       │    │    └─ detector_error_models/circuit_scheduling.py ── ColorationCircuit
-       │    └─ beliefmatching ── detector_error_model_to_check_matrices()
-       │
-       │  Stage 3: Benchmark
-       └─ benchmark_lep(result) → BenchmarkResult
-            ├─ detector_error_models/circuit_lep_prediction.py ── PredictPriors
-            └─ detector_error_models/circuit_decoders.py ── BPLSD_Decoder
-```
+| Section | Description |
+|---------|-------------|
+| **Step 1** | Build a CSS code (rotated surface code) |
+| **Step 2** | Syndrome extraction — build noisy stim circuit, sample, extract DEM |
+| **Plot 2** | LEP vs physical error rate with error bars (sweep over *p*) |
+| **Step 4** | Sample complexity — minimum shots for ≤10% relative precision |
+| **Step 5** | Reproduce Plot (c) — fast working example (surface + color codes) |
+| **Step 6** | Scalable data pipeline with JSON checkpoints |
 
 ## Running the Demo
 

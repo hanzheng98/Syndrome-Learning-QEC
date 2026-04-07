@@ -493,8 +493,8 @@ class DEMSyndromeExtraction(BaseDEMSim):
         # (one per time step), mapping ancilla-row -> data-column.
         scheduling_X = ColorationCircuit(code.hx)
         scheduling_Z = ColorationCircuit(code.hz)
-        print("Syndrome extraction circuit scheduling for X stabilizers:", scheduling_X)
-        print("Syndrome extraction circuit scheduling for Z stabilizers:", scheduling_Z)
+        # print("Syndrome extraction circuit scheduling for X stabilizers:", scheduling_X)
+        # print("Syndrome extraction circuit scheduling for Z stabilizers:", scheduling_Z)
         self.scheduling = {
             "X": scheduling_X,
             "Z": scheduling_Z,
