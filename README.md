@@ -2,6 +2,10 @@
 
 Learn logical noise channels from syndrome data using circuit-level quantum error correction simulation.
 
+Based on the algorithm described in:
+
+> [Efficient Learning of Logical Error Channels from Syndrome Data](https://arxiv.org/abs/2601.22286)
+
 ## Setup
 
 Create a conda environment and install dependencies:
@@ -71,8 +75,8 @@ demo/qec_learn_syndrome.ipynb
   └─ sim_qec/pipeline.py
        │
        │  Stage 1: Build code
-       ├─ CSSCode.from_rotated_surface_code(d)
-       │    └─ codes_family/hpc_lp.py ── rotated_surface_code_checks()
+       ├─ codes_family/hpc_lp.py ── rotated_surface_code_checks(d)
+       │    └─ bposd.css.css_code(Hx, Hz)
        │
        │  Stage 2: Circuit + sampling
        ├─ run_syndrome_extraction(code, config) → SyndromeExtractionResult
@@ -99,6 +103,10 @@ python demo/learn_circuit_lep_fromsyndrome.py
 ```
 
 The demo builds a distance-3 rotated surface code, samples 5M syndrome shots from a circuit-level noise model, learns fault priors from the syndrome statistics, and compares the predicted logical error probability against direct Monte Carlo sampling.
+
+## Authors
+
+Developed by **Han Zheng** and **Chia-Tung (Andy) Chu**.
 
 ## License
 
