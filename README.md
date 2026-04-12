@@ -4,7 +4,7 @@ Efficient estimation of logical noise channels from syndrome measurement data un
 
 Reference:
 
-> [Efficient Learning of Logical Error Channels from Syndrome Data](https://arxiv.org/abs/2601.22286)
+> [Efficient learning of logical noise from syndrome data](https://arxiv.org/abs/2601.22286)
 
 ## Setup
 
